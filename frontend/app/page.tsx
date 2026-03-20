@@ -1,5 +1,5 @@
-import Image from 'next/image';
+import DashboardViews from '@/modules/dashboard/ui/views/dashboard-views';
 
 export default function Home() {
-	return <div>bavsbn</div>;
+	return <DashboardViews />;
 }

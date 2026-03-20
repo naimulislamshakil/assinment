@@ -68,8 +68,6 @@ const RegisterViews = () => {
 
 			router.push('/login');
 		} catch (err: any) {
-			console.log(err);
-
 			if (err?.data?.errors) {
 				err.data.errors.forEach((e: { field: string; message: string }) => {
 					toast.error(`${e.field}: ${e.message}`);

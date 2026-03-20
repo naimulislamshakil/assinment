@@ -55,12 +55,12 @@ const LoginViews = () => {
 	const onSubmit = async (data: Data) => {
 		try {
 			const res = await login(data).unwrap();
-			console.log(res);
+			
 
 			toast.success(res.message);
 			router.push('/');
 		} catch (err: any) {
-			console.log(err);
+			
 
 			if (err?.data?.errors) {
 				err.data.errors.forEach((e: { field: string; message: string }) => {

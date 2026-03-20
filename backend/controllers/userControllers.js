@@ -80,14 +80,27 @@ export const login = catchAsyncError(async (req, res, next) => {
 		.status(200)
 		.cookie('accessToken', accessToken, {
 			httpOnly: true,
-			secure: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'strict',
+			maxAge: 15 * 60 * 1000,
 		})
-		.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true })
+		.cookie('refreshToken', refreshToken, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'strict',
+			maxAge: 7 * 24 * 60 * 60 * 1000,
+		})
 		.json({
 			success: true,
-			massage: 'Login successfully',
-			accessToken,
-			refreshToken,
+			message: 'Login successfully',
 			userData,
 		});
+});
+
+export const me = catchAsyncError(async (req, res, next) => {
+	const { password, refresh_token, ...userData } = req.user;
+
+	console.log(req.user);
+
+	handelResponse(res, 200, true, 'get all user', userData);
 });

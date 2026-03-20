@@ -31,6 +31,7 @@ export const userSlice = createApi({
 	reducerPath: 'userApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: 'http://localhost:5000/api/v1/user',
+		credentials: 'include',
 	}),
 	tagTypes: ['user'],
 	endpoints: (builder) => ({
@@ -51,7 +52,15 @@ export const userSlice = createApi({
 			}),
 			invalidatesTags: ['user'],
 		}),
+
+		me: builder.query<Response, void>({
+			query: () => ({
+				url: '/me',
+				method: 'GET',
+			}),
+			providesTags: ['user'],
+		}),
 	}),
 });
 
-export const { useRegisterMutation, useLoginMutation } = userSlice;
+export const { useRegisterMutation, useLoginMutation, useMeQuery } = userSlice;
