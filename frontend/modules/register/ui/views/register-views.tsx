@@ -29,9 +29,6 @@ import {
 	MailIcon,
 	User2Icon,
 } from 'lucide-react';
-import { Field } from '@/components/ui/field';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@/components/ui/button';
 import { registerSchema } from '@/schema/register-schema';
@@ -217,15 +214,6 @@ const RegisterViews = () => {
 										</FormItem>
 									)}
 								/>
-
-								<div>
-									<Field orientation="horizontal">
-										<Checkbox id="remember_me" name="remember_me" />
-										<Label htmlFor="remember_me">Remember me</Label>
-									</Field>
-
-									{/* <Link></Link> */}
-								</div>
 
 								<Button
 									disabled={isLoading}

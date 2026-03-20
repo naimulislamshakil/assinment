@@ -1,20 +1,30 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export interface User {
+	created_at: string;
+	created_by: string | null;
 	email: string;
+	id: string;
+	last_login: string | null;
+	name: string;
+	status: string;
+	updated_at: string;
+	user_type: string;
 }
 
 export interface Response {
 	success: boolean;
 	message: string;
+	accessToken?: string;
+	refreshToken?: string;
 	data: User | null;
 }
 
 export interface Body {
 	email: string;
-	name: string;
+	name?: string;
 	password: string;
-	confirmPassword: string;
+	confirmPassword?: string;
 }
 
 export const userSlice = createApi({
@@ -32,7 +42,16 @@ export const userSlice = createApi({
 			}),
 			invalidatesTags: ['user'],
 		}),
+
+		login: builder.mutation<Response, Body>({
+			query: (input) => ({
+				url: '/login',
+				method: 'POST',
+				body: input,
+			}),
+			invalidatesTags: ['user'],
+		}),
 	}),
 });
 
-export const { useRegisterMutation } = userSlice;
+export const { useRegisterMutation, useLoginMutation } = userSlice;
