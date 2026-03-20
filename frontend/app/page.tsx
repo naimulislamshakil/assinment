@@ -1,5 +1,6 @@
-import DashboardViews from '@/modules/dashboard/ui/views/dashboard-views';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-	return <DashboardViews />;
+	redirect('/dashboard');
+	return <div>hnbsvh</div>;
 }

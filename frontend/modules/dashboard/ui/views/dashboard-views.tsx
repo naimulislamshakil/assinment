@@ -7,7 +7,7 @@ const DashboardViews = () => {
 
 	console.log(data);
 
-	return <div>DashboardViews</div>;
+	return <div className="w-full">DashboardViews</div>;
 };
 
 export default DashboardViews;

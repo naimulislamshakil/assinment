@@ -100,7 +100,5 @@ export const login = catchAsyncError(async (req, res, next) => {
 export const me = catchAsyncError(async (req, res, next) => {
 	const { password, refresh_token, ...userData } = req.user;
 
-	console.log(req.user);
-
 	handelResponse(res, 200, true, 'get all user', userData);
 });
