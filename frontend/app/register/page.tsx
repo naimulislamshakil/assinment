@@ -1,3 +1,4 @@
+'use client';
 import RegisterViews from '@/modules/register/ui/views/register-views';
 import React from 'react';
 

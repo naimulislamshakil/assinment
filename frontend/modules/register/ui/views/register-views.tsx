@@ -35,6 +35,9 @@ import { Label } from '@/components/ui/label';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@/components/ui/button';
 import { registerSchema } from '@/schema/register-schema';
+import { useRegisterMutation } from '@/Redux/slice/userSlice';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 interface Data {
 	name: string;
@@ -44,6 +47,8 @@ interface Data {
 }
 
 const RegisterViews = () => {
+	const router = useRouter();
+	const [register, { isLoading }] = useRegisterMutation();
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [showConfirmPassword, setShowConfirmPassword] =
 		useState<boolean>(false);
@@ -59,7 +64,24 @@ const RegisterViews = () => {
 	});
 
 	const onSubmit = async (data: Data) => {
-		console.log(data);
+		try {
+			const res = await register(data).unwrap();
+
+			toast.success(res.message);
+
+			router.push('/login');
+		} catch (err: any) {
+			console.log(err);
+
+			if (err?.data?.errors) {
+				err.data.errors.forEach((e: { field: string; message: string }) => {
+					toast.error(`${e.field}: ${e.message}`);
+				});
+				return;
+			}
+
+			toast.error(err?.data?.message || 'Something went wrong');
+		}
 	};
 
 	return (
@@ -179,7 +201,7 @@ const RegisterViews = () => {
 
 													<InputGroupAddon
 														onClick={() =>
-															setShowConfirmPassword(!showPassword)
+															setShowConfirmPassword(!showConfirmPassword)
 														}
 														align="inline-end"
 													>
@@ -205,8 +227,12 @@ const RegisterViews = () => {
 									{/* <Link></Link> */}
 								</div>
 
-								<Button className="w-full py-5" type="submit">
-									Register
+								<Button
+									disabled={isLoading}
+									className="w-full py-5"
+									type="submit"
+								>
+									{isLoading ? 'User creating...' : 'Register'}
 								</Button>
 							</form>
 						</Form>
